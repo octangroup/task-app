@@ -4,7 +4,12 @@ GET http://localhost:3000/tasks
 
 GET http://localhost:3000/tasks/:id
 
+### 
+
+DELETE http://localhost:3000/tasks/:id
+
 ###
+
 
 POST http://localhost:3000/tasks
 Content-Type: application/json
@@ -14,4 +19,15 @@ Content-Type: application/json
     "name": "Create APIs",
     "status": "true"
     
+}
+
+###
+
+PATCH http://localhost:3000/tasks/:id
+Content-Type: application/json
+
+{
+    "creator_id": "2",
+    "name": "Update APIs",
+    "status": "false"
 }
