@@ -31,3 +31,13 @@ Content-Type: application/json
     "name": "Update APIs",
     "status": "false"
 }
+
+###
+
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+    "username": "herve",
+    "password": "jesus123"
+}

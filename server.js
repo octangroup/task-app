@@ -17,4 +17,8 @@ const tasksRouter = require('./routes/tasks')
 app.use('/tasks', tasksRouter)
 'localhost:3000/tasks'
 
+const usersRouter = require('./routes/users')
+app.use('/users', usersRouter)
+'localhost:3000/users'
+
 app.listen(3000, () => console.log('server started'))
