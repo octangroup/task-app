@@ -17,3 +17,14 @@ router.post('/', async(req, res) => {
         res.status(400).json({ message: error.message })
     }
 })
+
+// getting all users
+
+router.get('/', async(req,res) => {
+    try {
+        const allUsers = await User.find()
+        res.send(allUsers)
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+})
