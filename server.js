@@ -13,8 +13,8 @@ db.once('open', () => console.log('Connected to Database'))
 
 app.use(express.json())
 
-const userRouter = require('./models/User')
-app.use('/users', userRouter)
+const taskRouter = require('./models/Task')
+app.use('/tasks', taskRouter)
 
 
 app.listen(3000, () => console.log('server started'))

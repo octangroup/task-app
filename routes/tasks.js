@@ -26,8 +26,7 @@ router.post('/', async (req, res) => {
     const task = new Task({
         name: req.body.name,
         status: req.body.status
-    })
-
+    });
     try {
         const newTask = await task.save()
         res.status(201).json(newTask)
