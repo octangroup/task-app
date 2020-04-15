@@ -24,9 +24,10 @@ router.get('/:id', getTask, (req, res) => {
 
 router.post('/', async (req, res) => {
     const task = new Task({
+        creator_id: req.body.creator_id,
         name: req.body.name,
         status: req.body.status
-    });
+    })
     try {
         const newTask = await task.save()
         res.status(201).json(newTask)

@@ -28,3 +28,47 @@ router.get('/', async(req,res) => {
         res.status(500).json({ message: error.message })
     }
 })
+
+// updating a user
+
+router.patch('/:id', getUser, async(req, res) => {
+    if(req.body.username != null ){
+        res.user.username = req.body.username
+    }
+    if(req.body.password != null){
+        res.user.password = req.body.password
+    }
+    try {
+        const updatedUser = await req.user.save()
+        res.json(updatedUser)
+    } catch (error) {
+        res.status(500).json({ message: error.message})
+    }
+})
+
+// deleting a user
+
+router.delete('/:id', getUser, (req, res) => {
+    try {
+        res.user.remove()
+        res.json({ message: 'User successfully deleted'})
+    } catch (error) {
+        res.status(400).json({ message: error.message})
+    }
+})
+
+// getting a user
+
+async function getUser(req,res,next){
+    let user
+    try {
+        user = await User.findById(req.params.id)
+        if(user == null){
+            res.status(404).json({ message: 'can not find user'})
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message})
+    }
+    res.user = user
+    next()
+}
