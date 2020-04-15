@@ -31,7 +31,6 @@ Content-Type: application/json
     "name": "Update APIs",
     "status": "false"
 }
-<<<<<<< HEAD
 
 ###
 
@@ -46,5 +45,13 @@ Content-Type: application/json
 ###
 
 GET http://localhost:3002/users
-=======
->>>>>>> b9891d320e4a7a20965d5675b0f46a6bba80c6d8
+
+###
+
+PATCH http://localhost:3002/users/5e96acd6079f3a21ba8fd1da
+Content-Type: application/json
+
+{
+    "username": "fidele",
+    "password": "herve123"
+}

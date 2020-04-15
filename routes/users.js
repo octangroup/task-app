@@ -1,5 +1,5 @@
-const express = require('express')
-const router = express.Router()
+const express = require('express');
+const router = express.Router();
 
 const User = require('../models/User')
 
@@ -39,7 +39,7 @@ router.patch('/:id', getUser, async(req, res) => {
         res.user.password = req.body.password
     }
     try {
-        const updatedUser = await req.user.save()
+        const updatedUser = await res.user.save()
         res.json(updatedUser)
     } catch (error) {
         res.status(500).json({ message: error.message})
@@ -72,3 +72,6 @@ async function getUser(req,res,next){
     res.user = user
     next()
 }
+
+
+module.exports = router
