@@ -31,6 +31,7 @@ Content-Type: application/json
     "name": "Update APIs",
     "status": "false"
 }
+<<<<<<< HEAD
 
 ###
 
@@ -45,3 +46,5 @@ Content-Type: application/json
 ###
 
 GET http://localhost:3002/users
+=======
+>>>>>>> b9891d320e4a7a20965d5675b0f46a6bba80c6d8
