@@ -15,9 +15,8 @@ POST http://localhost:3002/tasks
 Content-Type: application/json
 
 {
-    "creator_id": "1",
     "name": "Create APIs",
-    "status": "true"
+    "status": "finished"
     
 }
 
@@ -27,7 +26,6 @@ PATCH http://localhost:3002/tasks/:id
 Content-Type: application/json
 
 {
-    "creator_id": "2",
     "name": "Update APIs",
     "status": "false"
 }

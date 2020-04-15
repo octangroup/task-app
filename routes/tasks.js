@@ -24,7 +24,6 @@ router.get('/:id', getTask, (req, res) => {
 
 router.post('/', async (req, res) => {
     const task = new Task({
-        creator_id: req.body.creator_id,
         name: req.body.name,
         status: req.body.status
     })
@@ -36,12 +35,9 @@ router.post('/', async (req, res) => {
     }
 })
 
-// updating one task
+// updating a task
 
 router.patch('/:id', getTask, async(req,res) => {
-    if(req.body.creator_id != null){
-        res.task.creator_id = req.body.creator_id
-    }
     if(req.body.name !=null){
         req.task.name = req.body.name
     }
