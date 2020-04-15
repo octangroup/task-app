@@ -10,9 +10,11 @@ const userSchema = new mongoose.Schema({
         required: true
     },
     tasks: [{
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
-    }]
+    }],
+}, {
+    timestamps: true
 })
 
 module.exports = mongoose.model('User',userSchema)
