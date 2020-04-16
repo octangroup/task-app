@@ -36,8 +36,9 @@ POST http://localhost:3002/users
 Content-Type: application/json
 
 {
-    "username": "herve",
-    "password": "jesus123"
+    "username": "he",
+    "password": "jesus",
+    "email": "ngenziherve@octangrp.com"
 }
 
 ###
@@ -51,5 +52,10 @@ Content-Type: application/json
 
 {
     "username": "fidele",
-    "password": "herve123"
+    "password": "herve123",
+    "email": "ngenziherve@gmail.com"
 }
+
+###
+
+DELETE http://localhost:3002/users/5e982443d1bf83503941947c

@@ -3,11 +3,13 @@ const router = express.Router();
 
 const User = require('../models/User')
 
+
 // creating user
 
 router.post('/', async(req, res) => {
     const user = new User({
         username: req.body.username,
+        email: req.body.email,
         password: req.body.password
     })
     try {
@@ -37,6 +39,9 @@ router.patch('/:id', getUser, async(req, res) => {
     }
     if(req.body.password != null){
         res.user.password = req.body.password
+    }
+    if(req.body.email != null){
+        res.user.email = req.body.email
     }
     try {
         const updatedUser = await res.user.save()
