@@ -13,11 +13,6 @@
 ```bash
 npm install 
 ```
-## Installing React Native CLI
-
-```bash
- sudo npm i -g react-native-cli 
-```
 ## Install Packages
 Use the package manager [npm install]() to install packages.
 
