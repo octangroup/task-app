@@ -3,6 +3,7 @@ const Joi = require('joi');
 const validator = require('validator')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const Task = require('./Task')
 const userSchema = new mongoose.Schema({
     username: {
         type: String,
@@ -32,13 +33,19 @@ const userSchema = new mongoose.Schema({
             required:true
         }
      }],
-    tasks: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-    }],
 }, {
     timestamps: true
 })
+
+// user-task relationship
+
+userSchema.virtual('tasks',{
+    ref: 'Task',
+    localField:'_id',
+    foreignField: 'owner'
+})
+
+
 
 //Hashing the plane password
 userSchema.pre('save', async function(next){

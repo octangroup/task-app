@@ -1,14 +1,15 @@
 const express = require('express')
-const router = express.Router()
-
+const auth = require('../middleware/auth')
 const Task = require('../models/Task')
+const router = express.Router()
+// getting all your tasks
 
-// getting all tasks
-
-router.get('/', async (req, res) => {
+router.get('/', auth, async (req, res) => {
     try {
-        const tasks = await Task.find()
-        res.send(tasks)
+        await req.user.populate({
+            path:'tasks'
+        }).execPopulate()
+        res.send(req.user.tasks)
     } catch (error) {
         res.status(500).json({ message: error.message})
     }
@@ -22,14 +23,14 @@ router.get('/:id', getTask, (req, res) => {
 
 // creating one task
 
-router.post('/', async (req, res) => {
+router.post('/', auth, async (req, res) => {
     const task = new Task({
-        name: req.body.name,
-        status: req.body.status
+       ...req.body,
+       owner:req.user._id
     })
     try {
-        const newTask = await task.save()
-        res.status(201).json(newTask)
+         await task.save()
+        res.status(201).send(task)
     } catch (error) {
         res.status(400).json({ message: error.message})
     }

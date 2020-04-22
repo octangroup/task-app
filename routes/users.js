@@ -45,13 +45,8 @@ router.post('/logout',auth, async (req,res)=>{
 
 // getting all users
 
-router.get('/', async(req,res) => {
-    try {
-        const allUsers = await User.find()
-        res.send(allUsers)
-    } catch (error) {
-        res.status(500).json({ message: error.message })
-    }
+router.get('/me',auth, async(req,res) => {
+   res.send(req.user)
 })
 
 // updating a user

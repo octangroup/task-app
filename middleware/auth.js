@@ -11,7 +11,7 @@ try {
     }
     req.token = token
     req.user = user
-    next
+    next()
 } catch (error) {
     res.status(401).send({error : 'Please authenticate.'})
 }
