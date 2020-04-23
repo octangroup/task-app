@@ -57,19 +57,19 @@ router.get('/me', auth, async (req, res) => {
 
 // updating a user
 
-router.patch('/:id', getUser, async (req, res) => {
+router.patch('/me', auth, async (req, res) => {
     if (req.body.username != null) {
-        res.user.username = req.body.username
+        req.user.username = req.body.username
     }
     if (req.body.password != null) {
-        res.user.password = req.body.password
+        req.user.password = req.body.password
     }
     if (req.body.email != null) {
-        res.user.email = req.body.email
+        req.user.email = req.body.email
     }
     try {
-        const updatedUser = await res.user.save()
-        res.json(updatedUser)
+        await req.user.save()
+        res.send(req.user)
     } catch (error) {
         res.status(500).json({
             message: error.message
@@ -79,9 +79,9 @@ router.patch('/:id', getUser, async (req, res) => {
 
 // deleting a user
 
-router.delete('/:id', getUser, (req, res) => {
+router.delete('/me', auth, async (req, res) => {
     try {
-        res.user.remove()
+        await req.user.remove()
         res.json({
             message: 'User successfully deleted'
         })
@@ -91,26 +91,6 @@ router.delete('/:id', getUser, (req, res) => {
         })
     }
 })
-
-// getting a user
-
-async function getUser(req, res, next) {
-    let user
-    try {
-        user = await User.findById(req.params.id)
-        if (user == null) {
-            res.status(404).json({
-                message: 'can not find user'
-            })
-        }
-    } catch (error) {
-        res.status(500).json({
-            message: error.message
-        })
-    }
-    res.user = user
-    next()
-}
 
 
 module.exports = router

@@ -55,3 +55,21 @@ test('An authenticated user should see his profile', async () => {
         .send()
         .expect(200)
 })
+
+test('An authenticated user should update his profile', async () => {
+    request(app)
+        .patch('/users/me')
+        .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+        .send({
+            username: 'chryso'
+        })
+        .expect(200)
+})
+
+test('an authenticated user should delete his own account', async () => {
+    request(app)
+        .delete('/users/me')
+        .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+        .send()
+        .expect(200)
+})
