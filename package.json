@@ -22,7 +22,9 @@
     "joi": "^14.3.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.7",
+    "multer": "^1.4.2",
     "nodemon": "^2.0.2",
+    "sharp": "^0.25.2",
     "supertest": "^4.0.2",
     "travis-ci": "^2.2.0",
     "validator": "^13.0.0"
