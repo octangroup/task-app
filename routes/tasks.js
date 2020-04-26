@@ -19,8 +19,16 @@ router.get('/', auth, async (req, res) => {
 
 // getting one task
 
-router.get('/:id', getTask, (req, res) => {
-    res.json(res.task)
+router.get('/:id', auth, async (req, res) => {
+    try {
+        const task = await Task.findOne({_id:req.params.id,owner:req.user._id})
+        if(!task){
+            res.status(400).send()
+        }
+        res.send(task)
+    } catch (error) {
+        res.status(500).send()
+    }
 })
 
 // creating one task
@@ -42,18 +50,23 @@ router.post('/', auth, async (req, res) => {
 
 // updating a task
 
-router.patch('/:id', getTask, async (req, res) => {
-    if (req.body.name != null) {
-        req.task.name = req.body.name
-    }
-    if (req.body.status != null) {
-        req.task.status = req.body.status
-    }
+router.patch('/:id', auth, async (req, res) => {
+  const updates = Object.keys(req.body)
+  const allowedUpdates = ['name','status']
+  const isValidOperation = updates.every((update)=>allowedUpdates.includes(update))
+  if(!isValidOperation){
+    return  res.status(400).send({error: 'Invalid update'})
+  }
     try {
-        const updatedTask = await req.task.save()
-        res.json(updatedTask)
+       const task = await Task.findOne({_id:req.params.id, owner:req.user._id})
+       if(!task){
+           res.status(400).send()
+       }
+       updates.forEach((update)=>task[update]=req.body[update])
+       await task.save()
+       res.send(task)
     } catch (error) {
-        res.status(400).json({
+        res.status(500).json({
             message: error.message
         })
     }
@@ -61,12 +74,13 @@ router.patch('/:id', getTask, async (req, res) => {
 
 // deleting one task
 
-router.delete('/:id', getTask, (req, res) => {
+router.delete('/:id', auth, async(req, res) => {
     try {
-        res.task.remove()
-        res.json({
-            message: 'Task Deleted'
-        })
+       const task = await Task.findOneAndDelete({_id:req.params.id, owner:req.user._id})
+       if(!task){
+           res.status(400).send()
+       }
+      res.send(task)
     } catch (error) {
         res.status(500).json({
             message: error.message
@@ -75,23 +89,6 @@ router.delete('/:id', getTask, (req, res) => {
 })
 
 
-async function getTask(req, res, next) {
-    let task
-    try {
-        task = await Task.findById(req.params.id)
-        if (task == null) {
-            return res.status(404).json({
-                message: 'can not find task'
-            })
-        }
-    } catch (error) {
-        return res.status(500).json({
-            message: error.message
-        })
-    }
 
-    res.task = task
-    next()
-}
 
 module.exports = router

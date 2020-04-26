@@ -25,12 +25,12 @@ const userTwo = {
     }]
 }
 
-// const taskOne = {
-//     _id: new mongoose.Types.ObjectId(),
-//     name:'first task',
-//     status: false,
-//     owner:userOne._id
-// }
+const taskOne = {
+    _id: new mongoose.Types.ObjectId(),
+    name:'first task',
+    status: false,
+    owner:userOne._id
+}
 
 // const taskTwo= {
 //     _id: new mongoose.Types.ObjectId(),
@@ -44,7 +44,7 @@ const setUpDatabase = async () =>{
     await Task.deleteMany()
     await new User(userOne).save()
     await new User(userTwo).save()
-    // await new Task(taskOne).save()
+    await new Task(taskOne).save()
     // await new Task(userTwo).save()
 }
 
@@ -53,7 +53,7 @@ module.exports = {
     userOneId,
     userTwo,
     userTwoId,
-    // taskOne,
+    taskOne,
     // taskTwo,
     setUpDatabase
 }
