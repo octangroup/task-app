@@ -41,7 +41,7 @@ test('An existing user should login', async () => {
 })
 
 test('an authenticated user should logout', async () => {
-    request(app)
+     request(app)
         .post('/logout')
         .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
         .send()
@@ -49,7 +49,7 @@ test('an authenticated user should logout', async () => {
 })
 
 test('An authenticated user should see his profile', async () => {
-    request(app)
+    await request(app)
         .get('/users/me')
         .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
         .send()
@@ -57,7 +57,7 @@ test('An authenticated user should see his profile', async () => {
 })
 
 test('An authenticated user should update his profile', async () => {
-    request(app)
+      await request(app)
         .patch('/users/me')
         .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
         .send({
@@ -67,9 +67,19 @@ test('An authenticated user should update his profile', async () => {
 })
 
 test('an authenticated user should delete his own account', async () => {
-    request(app)
+    await request(app)
         .delete('/users/me')
         .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
         .send()
         .expect(200)
+})
+
+test('should upload a profile picture of an authanticated user',async()=>{
+    await request(app)
+    .post('/users/me/avatar')
+    .set('Authorization', `Bearer ${userOne.tokens[0].token}`)
+    .attach('avatar','tests/fixtures/prome.jpg')
+    .expect(200)
+    const user = await User.findById(userOneId)
+    expect(user.avatar).toEqual(expect.any(Buffer))
 })
