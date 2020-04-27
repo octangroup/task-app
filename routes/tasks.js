@@ -5,9 +5,24 @@ const router = express.Router()
 // getting all your tasks
 
 router.get('/', auth, async (req, res) => {
+    const sort = {}
+    const match = {}
+    if(req.query.sortBy){
+        const parts = req.query.sortBy.split(':')
+        sort[parts[0]] = parts[1] === 'desc' ? -1 : 1
+    }
+    if(req.query.status){
+        match.status = req.query.status === 'true'
+    }
     try {
         await req.user.populate({
-            path: 'tasks'
+            path: 'tasks',
+            match,
+            options: {
+                limit : parseInt(req.query.limit),
+                skip: parseInt(req.query.skip),
+                sort
+            }
         }).execPopulate()
         res.send(req.user.tasks)
     } catch (error) {
